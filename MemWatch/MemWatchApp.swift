@@ -15,6 +15,15 @@ struct MemWatchApp: App {
         let monitor = MemoryPressureMonitor()
         monitor.start()
         _monitor = State(initialValue: monitor)
+        
+        let snap = try?
+        SystemMemoryReader().takeSnapshot()
+        if let snap {
+            print(Double(snap.usedBytes) / 1073741824.0)
+            print(Double(snap.appMemoryBytes) / 1073741824.0)
+            print(Double(snap.wiredBytes) / 1073741824.0)
+            print(Double(snap.compressedBytes) / 1073741824.0)
+        }
     }
 
     var body: some Scene {
